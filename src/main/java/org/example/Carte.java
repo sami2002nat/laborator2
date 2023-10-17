@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Carte {
 
@@ -8,7 +10,7 @@ public class Carte {
     public String autor;
 
     public ArrayList<Pagina> pagini = new ArrayList<>();
-
+    Map<Integer,Pagina> paginiCarte= new HashMap<Integer,Pagina>();
     public Carte(String titlu, String autor) {
         this.titlu = titlu;
         this.autor = autor;
@@ -16,6 +18,7 @@ public class Carte {
 
     public void adaugaPagina(Pagina pagina){
         pagini.add(pagina);
+        paginiCarte.put(pagina.nrPag,pagina);
     }
 
     public void afiseazaDetaliiCarte() {
@@ -24,13 +27,6 @@ public class Carte {
             System.out.println("Pagina " + pagina.nrPag + ": " + pagina.continut);
         }}
 
-    public void cautaCuvant(String cuvant) {
-        for (Pagina pagina : pagini) {
-            if (pagina.continut(cuvant)) {
-                System.out.println("Cuvantul " + cuvant + " a fost gasit in cartea " + titlu + " la pagina " + pagina.nrPag);
-            }
-        }
-    }
 
     public String gasesteText(int numarPagina) {
         for (Pagina pagina : pagini) {

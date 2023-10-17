@@ -2,13 +2,19 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Biblioteca {
 
     public ArrayList<Carte> listaCarti = new ArrayList<>();
 
+    Map<String, Carte> mapCarte = new HashMap<String, Carte>();
+
     public void adaugaCarte(Carte carte) {
         listaCarti.add(carte);
+        mapCarte.put(carte.titlu, carte);
     }
 
     public ArrayList<Carte> getListaCarti() {
@@ -40,10 +46,15 @@ public class Biblioteca {
         });
     }
 
-    public void cautaCuvant(String cuvant) {
+    public List<Results> cautaCuvant(String cuvantCautat) {
+        List<Results> searchResults = new ArrayList<>();
+
         for (Carte carte : listaCarti) {
-            carte.cautaCuvant(cuvant);
+            carte.getPagini().stream()
+                    .filter(pagina -> pagina.getContinut().contains(cuvantCautat))
+                    .forEach(pagina -> searchResults.add(new Results(carte.getTitlu(), pagina.getNrPag())));
         }
+        return searchResults;
     }
 
     public void afiseazaContinut(String titluCarte, int numarPagina) {
